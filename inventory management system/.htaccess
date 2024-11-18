@@ -1,0 +1,14 @@
+# .htaccess file
+
+# Rewrite all .php URLs to remove the .php extension
+RewriteEngine On
+RewriteBase /daniel_project/
+
+# Remove .php from URLs
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteCond %{REQUEST_FILENAME}.php -f
+RewriteRule ^([^/]+)/$ $1.php [L]
+
+# If you try to access a non-existent file, Apache will look for a .php file
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteRule ^([a-zA-Z0-9_-]+)$ $1.php [L]

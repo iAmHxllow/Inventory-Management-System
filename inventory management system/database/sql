@@ -1,0 +1,58 @@
+
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `logedin`
+--
+
+CREATE TABLE `logedin` (
+  `id` int(11) NOT NULL,
+  `name` varchar(50) NOT NULL,
+  `email` varchar(50) NOT NULL,
+  `password` varchar(255) NOT NULL
+
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `logedin`
+--
+
+INSERT INTO `logedin` (`id`, `name`, `email`, `password`, `GBP`, `USD`, `EUR`) VALUES
+(1, 'Igor', 'igorjank9@gmail.com', 'qwe');
+COMMIT;
+
+
+
+
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `register`
+--
+
+CREATE TABLE `register` (
+  `id` int(11) NOT NULL,
+  `name` varchar(50) NOT NULL,
+  `email` varchar(50) NOT NULL,
+  `password` varchar(255) NOT NULL
+ 
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `register`
+--
+
+INSERT INTO `register` (`id`, `name`, `email`, `password`) VALUES
+(1, 'Igor', 'igorjank9@gmail.com', 'qwe'),
+(2, 'Igor2', 'josh@qwe.com', '123'),
+(3, 'Igor3', 'qweqweqw', '123'),
+(4, 'qwe', 'qwe', 'qwe');
+
+--
+-- Indexes for dumped tables
+--
+
+--
+--

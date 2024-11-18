@@ -1,0 +1,153 @@
+
+@import url('https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap');
+
+       * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+         
+        }
+html{
+    scroll-behavior: smooth;
+}
+        body {
+            min-height: 100vh;
+            position: relative;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 2rem;
+            font-family: "Inter", sans-serif;
+        }
+
+        /* Add this new styles for the background */
+        body::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: #5CD2B9;
+      clip-path: polygon(36% 60%, 100% 60%, 100% 100%, 0 100%);
+            z-index: -1;
+        }
+    @media screen and (max-width:768px) {
+            body::before {
+              clip-path: polygon(46% 60%, 100% 60%, 100% 100%, 0 100%);
+            }
+    }
+
+        /* Rest of your existing styles remain the same */
+        .header {
+            width: 100%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 4rem;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-size: 42px;
+            color: #000;;
+            font-weight: 800;
+        }
+        .logo img{
+            width: 50px;
+        }
+
+        .cart-icon {
+            color: #5CD2B9;
+            font-size: 2rem;
+        }
+
+        .sign-up-btn {
+            background-color: #6E8EDF;
+            color: white;
+            padding: 10px 14px;
+            border-radius: 2rem;
+            font-size: 18px;
+            text-decoration: none;
+            font-weight: 700;
+
+        }
+
+        .main-content {
+            width: 100%;
+            max-width: 500px;
+            text-align: center;
+        }
+
+        h1 {
+            font-size: 30px;
+        
+            display: flex;
+            font-weight: 800;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+        }
+
+        .subtitle {
+            font-size: 1.25rem;
+            margin-bottom: 2rem;
+            padding-top: 10px;
+            color: #000;
+            font-weight: 500;
+        }
+
+       
+.form-group {
+    margin-bottom: 1.5rem;
+    text-align: left;
+}
+
+.form-group label {
+    
+    display: block;
+    margin-bottom: 0.5rem;
+    font-weight: 700;
+}
+
+.input-container {
+    position: relative;
+    width: 100%;
+}
+
+.input-icon {
+    position: absolute;
+    left: 1rem;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 20px;
+    height: 20px;
+    pointer-events: none;
+}
+
+.form-group input {
+    width: 100%;
+    padding: 1rem 1rem 1rem 3rem; /* Increased left padding to make room for icon */
+    border: none;
+    background-color: #E8E8E8;
+    border-radius: 0.5rem;
+    font-size: 1rem;
+}
+
+        .login-btn {
+            background-color:#6E8EDF;
+            color: white;
+            padding: 15px 3rem;
+            border: none;
+            font-size: 24px;
+            border-radius: 20px;
+          font-weight: 700;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        .login-btn:hover {
+            background-color: #5666d9;
+        }
