@@ -5,6 +5,8 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Dashboard</title>
+    <script defer src="https://cdn.jsdelivr.net/npm/chart.js@4.4.7/dist/chart.umd.min.js"></script>
+    <script defer src="/Application/Scripts/Index.js"></script>
     <link rel="icon" type="image/svg+xml" href="/Application/Assets/Images/QuickBuyIcon.svg" />
     <link rel="stylesheet" href="/Application/CSS/Style.css" />
 </head>
@@ -200,7 +202,7 @@
                         </div>
                         <!-- Quantity Box -->
 
-                        <!-- To be recieved Box -->
+                        <!-- To be received Box -->
                         <div class="to-be-recieved-box">
 
                             <div class="quantity-to-be-recieved-icons">
@@ -216,7 +218,7 @@
                             </div>
 
                         </div>
-                        <!-- To be recieved Box -->
+                        <!-- To be received Box -->
                     </div>
                 </div>
                 <!-- Inventory Summary Section -->
@@ -296,10 +298,12 @@
                     <div class="H3-see-all-button">
                         <h3>Low Quantity Stock</h3>
                         <div class="see-all-button">
-                            <img src="/Application/Assets/Images/See All Button.svg" alt="See all button"></a>
+                            <a href="#">
+                                <img src="/Application/Assets/Images/See All Button.svg" alt="See all button">
+                            </a>
                         </div>
                     </div>
-
+                                        
                     <div class="low-quantity-table">
                         <table>
 
@@ -310,7 +314,7 @@
                                 </td>
                                 <td>Item name</td> <!-- Replace with database values -->
                                 <td>Quantity</td> <!-- Replace with database values -->
-                                <td>Status</td> <!-- Replace with database values -->
+                                <td><button class="status-button">Low</button></td> <!-- Replace with database values - if low then glow then or make it so anything placed in low stock place = low -->
                             </tr>
                             <tr class="row-divider"></tr>
                             <!-- Row 1 -->
@@ -322,7 +326,7 @@
                                 </td>
                                 <td>Item name</td> <!-- Replace with database values -->
                                 <td>Quantity</td> <!-- Replace with database values -->
-                                <td>Status</td> <!-- Replace with database values -->
+                                <td><button class="status-button">Low</button></td> <!-- Replace with database values - if low then glow then or make it so anything placed in low stock place = low -->
                             </tr>
                             <tr class="row-divider"></tr>
                             <!-- Row 2 -->
@@ -334,7 +338,7 @@
                                 </td>
                                 <td>Item name</td> <!-- Replace with database values -->
                                 <td>Quantity</td> <!-- Replace with database values -->
-                                <td>Status</td> <!-- Replace with database values -->
+                                <td><button class="status-button">Low</button></td> <!-- Replace with database values - if low then glow then or make it so anything placed in low stock place = low -->
                             </tr>
                             <!-- Row 3 -->
                         </table>
@@ -342,10 +346,68 @@
                 </div>
                 <!-- Low Stock Section -->
 
-                <div class="item item-5">Sales & Purchase</div>
-                <div class="item item-6">Order Summary</div>
-                <div class="item item-7">Top Selling Stock</div>
+                <!-- Sales & Purchase Section -->
+                <div class="item item-5">
+
+                    <div class="h3-container">
+                        <h3>Sales & Purchase</h3>
+                    </div>
+
+                    <div class="chart-container">
+                        <div class="chart">
+                            <canvas id="barchart" width="760px" height="210px"></canvas>
+                        </div>
+                    </div>
+                </div>
+                <!-- Sales & Purchase Section -->
+
+                <!-- Order Summary Section -->
+                <div class="item item-6">
+                    
+                    <div class="h3-container">
+                        <h3>Order Summary</h3>
+                    </div>
+
+                    <div class="chart-container">
+                        <div class="chart">
+                            <canvas id="line-chart" width="690px" height="200px"></canvas>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Top Selling Section -->
+                <div class="item item-7">
+
+                    <div class="H3-see-all-button">
+                        <h3>Top Selling Stock</h3>
+                        <div class="see-all-button">
+                            <a href="#">
+                                <img src="/Application/Assets/Images/See All Button.svg" alt="See all button">
+                            </a>
+                        </div>
+                    </div>
+                    
+
+                    <div class="top-selling-table">
+                        <table>
+
+                            <!-- Row 1 -->
+                            <tr>
+                                <td class="item-picture">
+                                <img src="/Application/Assets/Images/Tata Salt Item.svg" alt="Example Item 1"></a>
+                                </td>
+                                <td>Item name</td> <!-- Replace with database values -->
+                                <td>Quantity</td> <!-- Replace with database values -->
+                                <td><button class="status-button">Medium</button></td> <!-- Replace with database values -->
+                            </tr>
+                            <tr class="row-divider"></tr>
+                            <!-- Row 1 -->
+                        </table>
+                    </div>
+
+                </div>
             </div>
+            <!-- Top Selling Section -->
             
 
             <!-- Grid -->
