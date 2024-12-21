@@ -1,0 +1,452 @@
+/* GENERAL PAGE CSS */
+
+/* CSS Reset */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+/* CSS Reset */
+
+/* font */
+@font-face {
+    font-family: "Inter";
+    src: url("/Application/Assets/Font/static/Inter_18pt-Light.ttf")
+      format("opentype");
+  }
+
+*{
+    font-family: "Inter", sans-serif;
+}
+/* font */
+
+/* media queries */
+
+/* media queries */
+  
+
+/* GENERAL PAGE CSS */
+
+
+/* DASHBOARD PAGE CSS */
+
+/* general */
+body .page-container {
+    display: flex;
+    height: 100vh;
+    width: 100%;
+    margin-left: auto;
+    margin-right: auto;
+    background-color: #F0F1F3;
+  }
+/* general */
+  
+/* side nav bar */
+.sidebar-container{
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    align-items: center;
+    padding: 10px;
+    min-width: 280px;
+    min-height: 100%;
+    background-color: #FFFFFF;
+}
+/* side nav bar */
+
+/* top search bar */
+.topbar-container{
+    display: flex;
+    flex-direction:column;
+    align-self: start;
+    background-color: #FFFFFF;
+    min-width: 1640px;
+}
+
+.Searchbar-NotificationIcon-ProfilePic-container{
+    display: flex;
+    flex-direction: row;
+    justify-content:space-between;
+    align-items: center;
+    min-width: 1620px;
+}
+
+.searchbox-container{
+    display: flex;
+    flex-direction: row;
+    justify-content:space-evenly;
+    align-items: center;
+    min-width: 235px;
+    margin-left: 10px;
+    border: 1px solid #858d9d88;
+
+}
+
+.search-box input[type=text] {
+    padding: 1px;
+    margin-right: 16px;
+    border: none;
+    font-size: 14px;
+  }
+
+.notification-icon{
+    margin-left: 1200px;
+}
+
+.profile-icon{
+    margin-right: 30px;
+}
+/* top search bar */
+
+/* main content */
+
+.main-content-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+/* H3 */
+.order-sum-text{
+    display: flex;
+    align-self: center;
+    padding: 10px;
+}
+/* H3 */
+
+/* grid */
+
+.grid-container {
+    display: grid;
+    grid-template-rows: repeat(7, 108px); 
+    grid-template-columns: repeat(13, 104px);
+    grid-auto-rows: 98px;
+    grid-auto-flow: row;
+    gap: 1em;
+}
+
+.grid-container > .item {
+    background-color: rgb(255, 255, 255);
+    font-weight: 600;
+    border-radius: 10px;
+}
+
+.grid-container > .item > h3{
+    margin-left: 11px;
+    font-size: 20px;
+}
+
+.item-1 {
+    grid-row: span 2;
+    grid-column: span 7;
+}
+
+.item-2 {
+    grid-row: span 2;
+    grid-column: span 6;
+}
+
+
+.item-3{
+    grid-row: span 2;
+    grid-column: span 7;
+}
+
+.item-4{
+    grid-row: span 3;
+    grid-column: 8 / span 6;
+}
+
+.item-5{
+    grid-row: 5 / span 2;
+    grid-column: span 7;
+}
+
+.item-6{
+    grid-row: span 2;
+    grid-column: span 6;
+}
+
+.item-7{
+    grid-row: span 1;
+    grid-column: span 7;
+}
+
+/* grid */
+
+/* Purchased Overview Section */
+
+.purchaseoverview-sections {
+    display: grid;
+    grid-auto-rows: 1fr;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 20px;
+}
+
+.purchaseoverview-sections > div {
+    border-right: 1px solid #e0e0e0; /* Separators */
+}
+
+.purchaseoverview-sections > div:last-child {
+    border-right: none; /* Remove border from the last box */
+}
+
+.purchased-box{
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+    gap: 1em;
+}
+
+.cost-box{
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items:center;
+    gap: 1em;
+}
+
+.canceled-box{
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items:center;
+    gap: 1em;
+}
+
+.returned-box{
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items:center;
+    gap: 1em;
+}
+
+.purchaseoveriew-icons{
+    margin-top: 45px;
+
+}
+
+.purchaseoveriew-icons > img {
+    height: 80px;
+    width: 80px;
+}
+
+.purchasedoverview-text > img{
+    height: 17px;
+    width: 90px;
+}
+
+/* Purchased Overview Section */
+
+/* Inventory Summary Section */
+
+.invsummary-sections {
+    display: grid;
+    grid-auto-rows: 1fr;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 20px;
+}
+
+.invsummary-sections > div {
+    border-right: 1px solid #e0e0e0; /* Separators */
+}
+
+.invsummary-sections > div:last-child {
+    border-right: none; /* Remove border from the last box */
+}
+
+.quantity-box{
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+    gap: 1em;
+}
+
+.to-be-recieved-box{
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+    gap: 1em;
+}
+
+.quantity-to-be-recieved-icons{
+    margin-top: 45px;
+
+}
+
+.quantity-to-be-recieved-icons > img {
+    height: 80px;
+    width: 80px;
+}
+
+.quantity-to-be-recieved-text > img{
+    width: 130px;
+}
+
+/* Inventory Summary Section */
+
+/* Sales Overview Section */
+
+.salesoverview-sections {
+    display: grid;
+    grid-auto-rows: 1fr;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 20px;
+}
+
+.salesoverview-sections > div {
+    border-right: 1px solid #e0e0e0; /* Separators */
+}
+
+.salesoverview-sections > div:last-child {
+    border-right: none; /* Remove border from the last box */
+}
+
+.sales-box{
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+    gap: 1em;
+}
+
+.revenue-box{
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+    gap: 1em;
+}
+
+.profit-box{
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+    gap: 1em;
+}
+
+.sales-revenue-profit-cost-icons{
+    margin-top: 45px;
+
+}
+
+.sales-revenue-profit-cost-icons > img {
+    width: 80px;
+}
+
+.sales-revenue-profit-cost-text > img{
+    height: 17px;
+    width: 80px;
+}
+
+/* Sales Overview Section */
+
+/* Low Stock Section */
+
+.H3-see-all-button{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin-right: 13px;
+}
+
+.H3-see-all-button > .see-all-button img{
+    height: 20px;
+    width: 54px;
+}
+
+
+.low-quantity-table > table{
+    margin-top: 10px;
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.row-divider {
+    height: 38px; /* Thickness of the divider */
+    display: table-row; /* Ensures the divider spans the table's width */
+}
+
+.status-button {
+    display: inline-block;
+    padding: 5px 10px;
+    font-size: 14px;
+    color: white;
+    text-align: center;
+    text-decoration: none;
+    background-color: rgb(219, 4, 4);
+    border: none;
+    border-radius: 4px;
+    box-shadow: 0 0 10px rgba(255, 0, 0, 0.8), 0 0 20px rgba(255, 0, 0, 0.6), 0 0 30px rgba(255, 0, 0, 0.4);
+    cursor: pointer;
+    animation: glow 1.5s infinite alternate;
+}
+
+
+/* Low Stock Section */
+
+/* Sales & Purchase Section */
+
+
+.chart-container{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.top-selling-table > table{
+    margin-top: 10px;
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.top-selling-table > table .status-button {
+    display: inline-block;
+    padding: 5px 10px;
+    font-size: 14px;
+    color: white;
+    text-align: center;
+    text-decoration: none;
+    background-color: rgb(28, 62, 211);
+    border: none;
+    border-radius: 4px;
+    box-shadow: 0 0 10px rgb(28, 62, 211), 0 0 20px rgb(28, 62, 211), 0 0 30px rgba(255, 0, 0, 0.4);
+    cursor: pointer;
+    animation: glow 1.5s infinite alternate;
+}
+
+/* Sales & Purchase Section */
+
+
+/* Top Selling Stock Section */
+.top-selling-table > table{
+    margin-top: 10px;
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.top-selling-table > table .status-button {
+    display: inline-block;
+    padding: 5px 10px;
+    font-size: 14px;
+    color: white;
+    text-align: center;
+    text-decoration: none;
+    background-color: rgb(28, 62, 211);
+    border: none;
+    border-radius: 4px;
+    box-shadow: 0 0 10px rgb(28, 62, 211), 0 0 20px rgb(28, 62, 211), 0 0 30px rgb(28, 62, 211);
+    cursor: pointer;
+    animation: glow 1.5s infinite alternate;
+}
+/* Top Selling Stock Section */
+
+/* main content */
+
+/* DASHBOARD PAGE CSS */
