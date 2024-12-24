@@ -570,7 +570,6 @@ body .page-container {
     display: flex;
 }
 
-/* Remove text decoration for icon links */
 .icon-link {
     text-decoration: none;
     color: inherit; 
@@ -581,3 +580,152 @@ body .page-container {
 }
 
 /* ACCOUNT TYPE PAGE CSS */
+
+/* REGISTER PAGE CSS */
+
+.Register-Body-container{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    align-self: center;
+    min-height: 991px;
+    width: 100%;
+    background-color: #FFFFFF;
+}
+
+.top-QBlogo-container-Login-button{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+}
+
+.top-QBlogo-container img{
+    width: 100%;
+}
+
+.Login-button-container{
+    width: 100%;
+}
+
+.create-title{
+    display: flex;
+    align-self: center;
+}
+
+.register-title h3{
+    display: flex;
+    align-self: center;
+}
+
+.register-title > h3{
+    font-size: 2.3em;
+    font-weight: 900;
+    margin-bottom: 10px;
+}
+
+.bottom-layer{
+    display: flex;
+}
+
+#bottom-layer{
+    position: absolute;
+    width: 100%;
+    right: 0;
+    bottom: 0;
+    z-index: 0;
+}
+
+/* Register Form */
+
+/* Add padding to containers */
+.register-form-box{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    align-self: center;
+    justify-content: center;
+    margin-top: 20px;
+    width: 100%;
+    height: 600px;
+    z-index: 1;
+}
+
+.reg-form-container {
+    display: flex;
+    flex-direction: column;
+    align-self: center;
+    align-items: center;
+    justify-content: space-evenly;
+    height: 500px;
+    width: 100%;
+}
+
+  /* Full-width input fields */
+  input[type=text], input[type=password] {
+    width: 800px;
+    height: 60px;
+    padding: 15px;
+    margin: 5px 0 22px 0;
+    display: inline-block;
+    border: none;
+    border-radius: 15px;
+    background: #E8E8E8;
+  }
+  
+  input[type=text]:focus, input[type=password]:focus {
+    background-color: #ddd;
+    outline: none;
+  }
+  
+  /* Set a grey background color and center the text of the "sign in" section */
+  .signin {
+    background-color: #f1f1f1;
+    text-align: center;
+  }
+
+  .input-container {
+    display: flex;
+    align-items: center;
+    width: 100%;
+    margin-bottom: 15px;
+}
+
+.img-input-icons {
+    padding: 10px;
+    color: white;
+    min-width: 50px;
+    text-align: center;
+}
+
+.input-field {
+    width: 100%;
+    padding: 10px;
+    outline: none;
+}
+
+.input-field:focus {
+    border: 2px solid dodgerblue;
+}
+
+.btn {
+    background-color: #6E8EDF;
+    color: white;
+    padding: 15px 20px;
+    border: none;
+    cursor: pointer;
+    width: 100%;
+    opacity: 0.9;
+}
+
+.btn:hover {
+    opacity: 1;
+}
+
+.input-container > .img-input-icons img {
+    height: 45px;
+    width: 60px;
+}
+  /* Register Form */
+
+/* REGISTER PAGE CSS */
