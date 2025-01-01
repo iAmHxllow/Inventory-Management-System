@@ -1,0 +1,198 @@
+-- Authentication & User Management
+-- Users Table
+CREATE TABLE Users (
+    UserID INT AUTO_INCREMENT PRIMARY KEY,
+    Username VARCHAR(50) NOT NULL UNIQUE,
+    PasswordHash VARCHAR(255) NOT NULL,
+    Email VARCHAR(100) NOT NULL UNIQUE,
+    CreatedAt TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    IsActive BOOLEAN DEFAULT TRUE
+);
+
+-- User Settings
+CREATE TABLE ColorBlindnessSettings (
+    UserID INT NOT NULL,
+    SettingID INT AUTO_INCREMENT PRIMARY KEY,
+    IsEnabled BOOLEAN DEFAULT FALSE,
+    FOREIGN KEY (UserID) REFERENCES Users(UserID)
+);
+
+CREATE TABLE PasswordRecovery (
+    UserID INT NOT NULL,
+    RecoveryID INT AUTO_INCREMENT PRIMARY KEY,
+    RecoveryToken VARCHAR(255),
+    ExpiryDate TIMESTAMP,
+    FOREIGN KEY (UserID) REFERENCES Users(UserID)
+);
+
+-- Product Management
+CREATE TABLE Products (
+    product_id INT AUTO_INCREMENT PRIMARY KEY,
+    product_name VARCHAR(255) NOT NULL,
+    buying_price DECIMAL(10, 2) NOT NULL,
+    quantity INT NOT NULL,
+    threshold_value INT NOT NULL,
+    expiry_date DATE,
+    availability BOOLEAN NOT NULL,
+    Category VARCHAR(50),
+    StockLevel INT NOT NULL,
+    SalesPerformance ENUM('Top-selling', 'Low-selling'),
+    CreatedAt TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+
+CREATE TABLE ProductFilter (
+    UserID INT NOT NULL,
+    FilterID INT AUTO_INCREMENT PRIMARY KEY,
+    FilterType ENUM('Category', 'StockLevel', 'SalesPerformance'),
+    FilterValue VARCHAR(50),
+    FOREIGN KEY (UserID) REFERENCES Users(UserID)
+);
+
+-- Supplier Management
+CREATE TABLE Suppliers (
+    supplier_id SERIAL PRIMARY KEY,
+    supplier_name VARCHAR(255) NOT NULL,
+    contact_number VARCHAR(15) NOT NULL
+);
+
+-- Store Management
+CREATE TABLE Stores (
+    store_id SERIAL PRIMARY KEY,
+    store_name VARCHAR(255) NOT NULL,
+    stock_in_hand INT NOT NULL
+);
+
+CREATE TABLE ManageStore (
+    branch_id SERIAL PRIMARY KEY,
+    branch_name VARCHAR(255) NOT NULL,
+    address VARCHAR(255) NOT NULL,
+    postcode VARCHAR(10) NOT NULL,
+    country VARCHAR(50) NOT NULL
+);
+
+-- Inventory Management
+CREATE TABLE Stocks (
+    stock_id SERIAL PRIMARY KEY,
+    opening_stock INT NOT NULL,
+    remaining_stock INT NOT NULL,
+    on_the_way INT NOT NULL,
+    threshold_value INT NOT NULL
+);
+
+-- Sales & Analytics
+CREATE TABLE BestSellingCategory (
+    category_id SERIAL PRIMARY KEY,
+    category VARCHAR(255) NOT NULL,
+    turnover DECIMAL(10, 2) NOT NULL,
+    increase_by DECIMAL(5, 2) NOT NULL
+);
+
+CREATE TABLE BestSellingProducts (
+    product_id SERIAL PRIMARY KEY,
+    product_name VARCHAR(255) NOT NULL,
+    category VARCHAR(255) NOT NULL,
+    remaining_quantity INT NOT NULL,
+    turnover DECIMAL(10, 2) NOT NULL,
+    increase_by DECIMAL(5, 2) NOT NULL
+);
+
+-- Financial Management
+CREATE TABLE Reports (
+    UserID INT NOT NULL,
+    ReportID INT AUTO_INCREMENT PRIMARY KEY,
+    ReportData JSON,
+    CreatedAt TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    FOREIGN KEY (UserID) REFERENCES Users(UserID)
+);
+
+CREATE TABLE Invoices (
+    UserID INT NOT NULL,
+    InvoiceID INT AUTO_INCREMENT PRIMARY KEY,
+    TotalAmount DECIMAL(10, 2) NOT NULL,
+    CreatedAt TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    FOREIGN KEY (UserID) REFERENCES Users(UserID)
+);
+
+CREATE TABLE Invoice (
+    invoice_id SERIAL PRIMARY KEY,
+    services VARCHAR(255) NOT NULL,
+    quantity INT NOT NULL,
+    rate DECIMAL(10, 2) NOT NULL,
+    line_total DECIMAL(10, 2) NOT NULL
+);
+
+-- User Profile Management
+CREATE TABLE MyDetails (
+    detail_id SERIAL PRIMARY KEY,
+    first_name VARCHAR(255) NOT NULL,
+    last_name VARCHAR(255) NOT NULL,
+    email_address VARCHAR(255) NOT NULL
+);
+
+-- Sample Data Insertions
+INSERT INTO Products 
+    (product_name, buying_price, quantity, threshold_value, expiry_date, availability, Category, StockLevel, SalesPerformance)
+VALUES
+    ('QuickBuy Whole Milk', 0.95, 50, 10, '2024-01-15', TRUE, 'Dairy Products', 100, 'Top-selling'),
+    ('QuickBuy Bread Loaf', 1.10, 30, 5, '2024-01-08', TRUE, 'Bakery Items', 50, 'Top-selling'),
+    ('Heinz Baked Beans', 0.85, 100, 20, '2025-06-20', TRUE, 'Canned Goods', 200, 'Low-selling'),
+    ('QuickBuy Chicken Breast', 5.50, 20, 5, '2024-01-05', TRUE, 'Meat Products', 30, 'Top-selling'),
+    ('Bananas', 1.20, 60, 10, '2024-01-12', TRUE, 'Fruits', 80, 'Low-selling'),
+    ('Coca-Cola 2L', 1.85, 40, 8, '2024-12-31', TRUE, 'Beverages', 120, 'Top-selling'),
+    ('QuickBuy Salted Butter', 2.50, 25, 5, '2024-02-20', TRUE, 'Dairy Products', 50, 'Low-selling'),
+    ('Brand Dairy Milk Bar', 1.00, 80, 15, '2025-01-01', TRUE, 'Snacks', 150, 'Top-selling'),
+    ('QuickBuy Toilet Rolls 9-Pack', 4.50, 35, 10, NULL, TRUE, 'Household', 100, 'Low-selling'),
+    ('Kellogg''s Corn Flakes', 3.00, 45, 10, '2025-05-15', TRUE, 'Cereal', 70, 'Top-selling');
+
+
+INSERT INTO Suppliers (supplier_name, contact_number)
+VALUES
+    ('DairyCo Supplies', '01234 567890'),
+    ('BakeHouse Ltd.', '09876 543210'),
+    ('Fresh Farms Wholesale', '01122 334455'),
+    ('QuickBuy Partners', '02233 445566');
+
+INSERT INTO Stores (store_name, stock_in_hand)
+VALUES
+    ('QuickBuy Sheffield', 65),
+    ('QuickBuy Barnsley', 45);
+
+INSERT INTO Stocks (opening_stock, remaining_stock, on_the_way, threshold_value)
+VALUES
+    (200, 150, 50, 30),
+    (300, 250, 60, 40),
+    (400, 300, 70, 50),
+    (500, 400, 80, 60);
+
+INSERT INTO BestSellingCategory (category, turnover, increase_by)
+VALUES
+    ('Dairy Products', 1500.50, 12.5),
+    ('Bakery Items', 1200.75, 10.0),
+    ('Beverages', 1800.90, 15.0),
+    ('Snacks', 1100.60, 8.0);
+
+INSERT INTO BestSellingProducts (product_name, category, remaining_quantity, turnover, increase_by)
+VALUES
+    ('QuickBuy Whole Milk', 'Dairy Products', 50, 500.00, 10.5),
+    ('QuickBuy Bread Loaf', 'Bakery Items', 30, 330.00, 8.5),
+    ('Coca-Cola 2L', 'Beverages', 40, 740.00, 12.0),
+    ('Brand Dairy Milk Bar', 'Snacks', 80, 600.00, 9.0);
+
+INSERT INTO Invoice (services, quantity, rate, line_total)
+VALUES
+    ('Milk Delivery', 10, 1.50, 15.00),
+    ('Bread Supply', 20, 1.10, 22.00),
+    ('Beverage Refill', 15, 2.00, 30.00),
+    ('Snack Restock', 25, 1.20, 30.00);
+
+INSERT INTO ManageStore (branch_name, address, postcode, country)
+VALUES
+    ('QuickBuy Sheffield', '123 Main Street, Sheffield', 'S1 2AB', 'United Kingdom'),
+    ('QuickBuy Barnsley', '456 Market Road, Barnsley', 'B1 3CD', 'United Kingdom');
+
+INSERT INTO MyDetails (first_name, last_name, email_address)
+VALUES
+    ('John', 'Doe', 'john.doe@example.com'),
+    ('Jane', 'Smith', 'jane.smith@example.com'),
+    ('Alice', 'Johnson', 'alice.johnson@example.com'),
+    ('Bob', 'Brown', 'bob.brown@example.com');
