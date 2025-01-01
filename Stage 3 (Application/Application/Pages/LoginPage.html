@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Log in</title>
+    <script defer src="/Application/Scripts/Index.js"></script>
+    <link rel="icon" type="image/svg+xml" href="/Application/Assets/Images/QuickBuyIcon.svg" />
+    <link rel="stylesheet" href="/Application/CSS/Style.css" />
+</head>
+
+<body>
+    <div class="LoginPage-Container">
+
+        <div class="top-QBlogo-SignUp-button-container">
+
+            <div class="LogInTop-QBlogo-container">
+                <img src="/Application/Assets/Images/QuickBuyLogo-BlackVersion.svg" alt="QuickBuy Logo">
+            </div>
+
+            <a href="RegisterPage.html" class="SignUp-button">
+                <img src="/Application/Assets/Images/Sign Up Button.svg" alt="Sign Up Button">
+            </a>
+
+        </div>
+
+        <div class="Welcome-title">
+            <img src="/Application/Assets/Images/Welcome To QuickBuy Text.svg" alt="Welcome to QuickBuy">
+        </div>
+
+        <div class="Login-title">
+            <h3>Let's get you to your work orders</h3>
+        </div>
+
+        <div class="Login-form-container">
+            <form action="/action_page.php" method="post">
+
+                <div class="Login-container">
+                    <label for="uname"><b>Username / Email</b></label>
+                    <input type="text" placeholder="Enter Username or Email" name="uname" required>
+
+                    <label for="psw"><b>Password</b></label>
+                    <input type="password" placeholder="Enter Password" name="psw" required>
+
+                    <button type="submit">Login</button>
+                    <label>
+                        <input type="checkbox" checked="checked" name="remember"> Remember me
+                    </label>
+                </div>
+
+                <div class="forgot-psw.container">
+                    <span class="psw">Forgot <a href="#">password?</a>
+                    </span>
+                </div>
+            </form>
+        </div>
+
+        <img src="/Application/Assets/Images/Bottom Layer.svg" alt="Bottom Layer" id="bottom-layer">
+
+    </div>
+</body>
+
+</html>
