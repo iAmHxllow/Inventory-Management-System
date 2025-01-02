@@ -1,0 +1,1 @@
+Download the .rar version & just open with VS Code if you're having trouble opening the application normally
