@@ -132,4 +132,4 @@ document.addEventListener('DOMContentLoaded', function () {
     });
   }
 });
-  // Reports Page - Line Chart
+// Reports Page - Line Chart
