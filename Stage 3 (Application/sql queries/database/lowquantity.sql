@@ -1,0 +1,2 @@
+-- no database is required as the data is fetched from the inventory page 
+-- and if any product quantity is below 10 then it will be displayed on the lowquantity.php page
