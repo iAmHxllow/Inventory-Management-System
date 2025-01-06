@@ -1,0 +1,156 @@
+-- USERS TABLE (Authentication & User Management)
+CREATE TABLE Users (
+    UserID INT AUTO_INCREMENT PRIMARY KEY,
+    Name VARCHAR(100) NOT NULL,
+    Email VARCHAR(100) NOT NULL UNIQUE,
+    PasswordHash VARCHAR(255) NOT NULL,
+    Role ENUM('Store Manager', 'Warehouse Manager', 'Category Manager', 'Sales Associate') NOT NULL,
+    CreatedAt TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    UpdatedAt TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+);
+
+-- COLOR BLINDNESS SETTINGS
+CREATE TABLE ColorBlindnessSettings (
+    SettingID INT AUTO_INCREMENT PRIMARY KEY,
+    UserID INT NOT NULL,
+    IsEnabled BOOLEAN DEFAULT FALSE,
+    FOREIGN KEY (UserID) REFERENCES Users(UserID) ON DELETE CASCADE
+);
+
+-- PASSWORD RECOVERY
+CREATE TABLE PasswordRecovery (
+    RecoveryID INT AUTO_INCREMENT PRIMARY KEY,
+    UserID INT NOT NULL,
+    RecoveryToken VARCHAR(255) NOT NULL,
+    ExpiryDate TIMESTAMP NOT NULL,
+    FOREIGN KEY (UserID) REFERENCES Users(UserID) ON DELETE CASCADE
+);
+
+-- PRODUCTS TABLE (Product Management)
+CREATE TABLE Products (
+    ProductID INT AUTO_INCREMENT PRIMARY KEY,
+    Name VARCHAR(255) NOT NULL,
+    BuyingPrice DECIMAL(10, 2) NOT NULL,
+    Quantity INT NOT NULL,
+    ThresholdValue INT NOT NULL,
+    ExpiryDate DATE,
+    Availability BOOLEAN NOT NULL,
+    Category VARCHAR(100),
+    StockLevel INT NOT NULL,
+    SalesPerformance ENUM('Top-selling', 'Low-selling'),
+    CreatedAt TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    UpdatedAt TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+);
+
+-- PRODUCT FILTER
+CREATE TABLE ProductFilter (
+    FilterID INT AUTO_INCREMENT PRIMARY KEY,
+    UserID INT NOT NULL,
+    FilterType ENUM('Category', 'StockLevel', 'SalesPerformance'),
+    FilterValue VARCHAR(100),
+    FOREIGN KEY (UserID) REFERENCES Users(UserID) ON DELETE CASCADE
+);
+
+-- SUPPLIERS TABLE
+CREATE TABLE Suppliers (
+    SupplierID INT AUTO_INCREMENT PRIMARY KEY,
+    Name VARCHAR(255) NOT NULL,
+    ContactNumber VARCHAR(15) NOT NULL
+);
+
+-- STORES TABLE
+CREATE TABLE Stores (
+    StoreID INT AUTO_INCREMENT PRIMARY KEY,
+    Name VARCHAR(255) NOT NULL,
+    StockInHand INT NOT NULL
+);
+
+-- MANAGE STORE BRANCHES
+CREATE TABLE ManageStore (
+    BranchID INT AUTO_INCREMENT PRIMARY KEY,
+    BranchName VARCHAR(255) NOT NULL,
+    Address VARCHAR(255) NOT NULL,
+    Postcode VARCHAR(10) NOT NULL,
+    Country VARCHAR(50) NOT NULL
+);
+
+-- STOCKS TABLE (Inventory Management)
+CREATE TABLE Stocks (
+    StockID INT AUTO_INCREMENT PRIMARY KEY,
+    OpeningStock INT NOT NULL,
+    RemainingStock INT NOT NULL,
+    OnTheWay INT NOT NULL,
+    ThresholdValue INT NOT NULL
+);
+
+-- BEST SELLING CATEGORY
+CREATE TABLE BestSellingCategory (
+    CategoryID INT AUTO_INCREMENT PRIMARY KEY,
+    Category VARCHAR(255) NOT NULL,
+    Turnover DECIMAL(10, 2) NOT NULL,
+    IncreaseBy DECIMAL(5, 2) NOT NULL
+);
+
+-- BEST SELLING PRODUCTS
+CREATE TABLE BestSellingProducts (
+    ProductID INT AUTO_INCREMENT PRIMARY KEY,
+    Name VARCHAR(255) NOT NULL,
+    Category VARCHAR(255) NOT NULL,
+    RemainingQuantity INT NOT NULL,
+    Turnover DECIMAL(10, 2) NOT NULL,
+    IncreaseBy DECIMAL(5, 2) NOT NULL,
+    ImagePath VARCHAR(255) DEFAULT '/path/to/default/image.svg'
+);
+
+-- INVOICES TABLE
+CREATE TABLE Invoices (
+    InvoiceID INT AUTO_INCREMENT PRIMARY KEY,
+    UserID INT NOT NULL,
+    TotalAmount DECIMAL(10, 2) NOT NULL,
+    CreatedAt TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    FOREIGN KEY (UserID) REFERENCES Users(UserID) ON DELETE CASCADE
+);
+
+-- INVOICE DETAILS
+CREATE TABLE InvoiceDetails (
+    DetailID INT AUTO_INCREMENT PRIMARY KEY,
+    InvoiceID INT NOT NULL,
+    ServiceDescription VARCHAR(255) NOT NULL,
+    Quantity INT NOT NULL,
+    Rate DECIMAL(10, 2) NOT NULL,
+    LineTotal DECIMAL(10, 2) AS (Quantity * Rate) STORED,
+    FOREIGN KEY (InvoiceID) REFERENCES Invoices(InvoiceID) ON DELETE CASCADE
+);
+
+-- USER PROFILE MANAGEMENT
+CREATE TABLE UserDetails (
+    DetailID INT AUTO_INCREMENT PRIMARY KEY,
+    UserID INT NOT NULL,
+    FirstName VARCHAR(100) NOT NULL,
+    LastName VARCHAR(100) NOT NULL,
+    Email VARCHAR(255) NOT NULL,
+    FOREIGN KEY (UserID) REFERENCES Users(UserID) ON DELETE CASCADE
+);
+
+-- SESSIONS TABLE (Session Management)
+CREATE TABLE Sessions (
+    SessionID VARCHAR(255) PRIMARY KEY, -- Unique session identifier, e.g., a UUID
+    UserID INT NOT NULL, -- Reference to the user
+    LoginTime TIMESTAMP DEFAULT CURRENT_TIMESTAMP, -- Time of login
+    ExpiryTime TIMESTAMP NOT NULL, -- When the session expires
+    IsActive BOOLEAN DEFAULT TRUE, -- Indicates if the session is active
+    FOREIGN KEY (UserID) REFERENCES Users(UserID) ON DELETE CASCADE
+);
+
+-- Indexes for better session query performance
+CREATE INDEX idx_UserID ON Sessions(UserID);
+CREATE INDEX idx_ExpiryTime ON Sessions(ExpiryTime);
+
+-- DATA INSERTIONS FOR SAMPLE USAGE
+INSERT INTO Users (Name, Email, PasswordHash, Role) VALUES
+    ('John Doe', 'john.doe@example.com', 'hashed_password', 'Store Manager'),
+    ('Jane Smith', 'jane.smith@example.com', 'hashed_password', 'Warehouse Manager');
+
+INSERT INTO Products (Name, BuyingPrice, Quantity, ThresholdValue, ExpiryDate, Availability, Category, StockLevel, SalesPerformance) VALUES
+    ('QuickBuy Whole Milk', 0.95, 50, 10, '2024-01-15', TRUE, 'Dairy Products', 100, 'Top-selling'),
+    ('QuickBuy Bread Loaf', 1.10, 30, 5, '2024-01-08', TRUE, 'Bakery Items', 50, 'Top-selling');
