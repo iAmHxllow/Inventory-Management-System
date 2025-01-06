@@ -1,0 +1,280 @@
+-- USERS TABLE (Authentication & User Management)
+CREATE TABLE Users (
+    UserID INT AUTO_INCREMENT PRIMARY KEY,
+    Name VARCHAR(100) NOT NULL,
+    Email VARCHAR(100) NOT NULL UNIQUE,
+    PasswordHash VARCHAR(255) NOT NULL,
+    Role ENUM('Store Manager', 'Warehouse Manager', 'Category Manager', 'Sales Associate') NOT NULL,
+    CreatedAt TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    UpdatedAt TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+);
+
+-- USER ROLES (Permissions Management)
+CREATE TABLE UserRoles (
+    RoleID INT AUTO_INCREMENT PRIMARY KEY,
+    RoleName VARCHAR(50) NOT NULL UNIQUE,
+    Description TEXT
+);
+
+-- USER-ROLE MAPPING
+CREATE TABLE UserRoleMapping (
+    MappingID INT AUTO_INCREMENT PRIMARY KEY,
+    UserID INT NOT NULL,
+    RoleID INT NOT NULL,
+    FOREIGN KEY (UserID) REFERENCES Users(UserID) ON DELETE CASCADE,
+    FOREIGN KEY (RoleID) REFERENCES UserRoles(RoleID) ON DELETE CASCADE
+);
+
+-- COLOR BLINDNESS SETTINGS
+CREATE TABLE ColorBlindnessSettings (
+    SettingID INT AUTO_INCREMENT PRIMARY KEY,
+    UserID INT NOT NULL,
+    IsEnabled BOOLEAN DEFAULT FALSE,
+    FOREIGN KEY (UserID) REFERENCES Users(UserID) ON DELETE CASCADE
+);
+
+-- PASSWORD RECOVERY
+CREATE TABLE PasswordRecovery (
+    RecoveryID INT AUTO_INCREMENT PRIMARY KEY,
+    UserID INT NOT NULL,
+    RecoveryToken VARCHAR(255) NOT NULL,
+    ExpiryDate TIMESTAMP NOT NULL,
+    FOREIGN KEY (UserID) REFERENCES Users(UserID) ON DELETE CASCADE
+);
+
+-- PRODUCTS TABLE (Product Management)
+CREATE TABLE Products (
+    ProductID INT AUTO_INCREMENT PRIMARY KEY,
+    Name VARCHAR(255) NOT NULL,
+    BuyingPrice DECIMAL(10, 2) NOT NULL,
+    SellingPrice DECIMAL(10, 2) NOT NULL,
+    Quantity INT NOT NULL,
+    ThresholdValue INT NOT NULL,
+    ExpiryDate DATE,
+    Availability BOOLEAN NOT NULL,
+    Category VARCHAR(100),
+    StockLevel INT NOT NULL,
+    SalesPerformance ENUM('Top-selling', 'Low-selling'),
+    CreatedAt TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    UpdatedAt TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+);
+
+-- PRODUCT DETAILS TABLE
+CREATE TABLE ProductDetails (
+    DetailID INT AUTO_INCREMENT PRIMARY KEY,
+    ProductID INT NOT NULL,
+    Description TEXT,
+    Dimensions VARCHAR(100),
+    Weight DECIMAL(10, 2),
+    Manufacturer VARCHAR(255),
+    WarrantyPeriod VARCHAR(50),
+    FOREIGN KEY (ProductID) REFERENCES Products(ProductID) ON DELETE CASCADE
+);
+
+-- INVENTORY NOTIFICATIONS
+CREATE TABLE Notifications (
+    NotificationID INT AUTO_INCREMENT PRIMARY KEY,
+    UserID INT NOT NULL,
+    Message TEXT NOT NULL,
+    IsRead BOOLEAN DEFAULT FALSE,
+    CreatedAt TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    FOREIGN KEY (UserID) REFERENCES Users(UserID) ON DELETE CASCADE
+);
+
+-- SUPPLIERS TABLE
+CREATE TABLE Suppliers (
+    SupplierID INT AUTO_INCREMENT PRIMARY KEY,
+    Name VARCHAR(255) NOT NULL,
+    ContactNumber VARCHAR(15) NOT NULL
+);
+
+-- STORES TABLE
+CREATE TABLE Stores (
+    StoreID INT AUTO_INCREMENT PRIMARY KEY,
+    Name VARCHAR(255) NOT NULL,
+    StockInHand INT NOT NULL
+);
+
+-- MANAGE STORE BRANCHES
+CREATE TABLE ManageStore (
+    BranchID INT AUTO_INCREMENT PRIMARY KEY,
+    BranchName VARCHAR(255) NOT NULL,
+    Address VARCHAR(255) NOT NULL,
+    Postcode VARCHAR(10) NOT NULL,
+    Country VARCHAR(50) NOT NULL
+);
+
+-- STOCKS TABLE (Inventory Management)
+CREATE TABLE Stocks (
+    StockID INT AUTO_INCREMENT PRIMARY KEY,
+    ProductID INT NOT NULL,
+    OpeningStock INT NOT NULL,
+    RemainingStock INT NOT NULL,
+    OnTheWay INT NOT NULL,
+    ThresholdValue INT NOT NULL,
+    FOREIGN KEY (ProductID) REFERENCES Products(ProductID) ON DELETE CASCADE
+);
+
+-- BEST SELLING PRODUCTS TABLE
+CREATE TABLE BestSellingProducts (
+    ProductID INT PRIMARY KEY,
+    Name VARCHAR(255) NOT NULL,
+    Category VARCHAR(255) NOT NULL,
+    TotalSales INT NOT NULL,
+    Turnover DECIMAL(10, 2) NOT NULL,
+    FOREIGN KEY (ProductID) REFERENCES Products(ProductID) ON DELETE CASCADE
+);
+
+-- LOW STOCK PRODUCTS TABLE
+CREATE TABLE LowStockProducts (
+    ProductID INT PRIMARY KEY,
+    Name VARCHAR(255) NOT NULL,
+    Category VARCHAR(255) NOT NULL,
+    RemainingStock INT NOT NULL,
+    ThresholdValue INT NOT NULL,
+    FOREIGN KEY (ProductID) REFERENCES Products(ProductID) ON DELETE CASCADE
+);
+
+-- INVOICES TABLE
+CREATE TABLE Invoices (
+    InvoiceID INT AUTO_INCREMENT PRIMARY KEY,
+    UserID INT NOT NULL,
+    TotalAmount DECIMAL(10, 2) NOT NULL,
+    CreatedAt TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    FOREIGN KEY (UserID) REFERENCES Users(UserID) ON DELETE CASCADE
+);
+
+-- INVOICE DETAILS
+CREATE TABLE InvoiceDetails (
+    DetailID INT AUTO_INCREMENT PRIMARY KEY,
+    InvoiceID INT NOT NULL,
+    ProductID INT NOT NULL,
+    Quantity INT NOT NULL,
+    Rate DECIMAL(10, 2) NOT NULL,
+    LineTotal DECIMAL(10, 2) AS (Quantity * Rate) STORED,
+    FOREIGN KEY (InvoiceID) REFERENCES Invoices(InvoiceID) ON DELETE CASCADE,
+    FOREIGN KEY (ProductID) REFERENCES Products(ProductID) ON DELETE CASCADE
+);
+
+-- CUSTOMER TABLE
+CREATE TABLE Customers (
+    CustomerID INT AUTO_INCREMENT PRIMARY KEY,
+    FirstName VARCHAR(100) NOT NULL,
+    LastName VARCHAR(100) NOT NULL,
+    Email VARCHAR(255) NOT NULL UNIQUE,
+    PhoneNumber VARCHAR(15),
+    Address TEXT
+);
+
+-- ORDERS TABLE
+CREATE TABLE Orders (
+    OrderID INT AUTO_INCREMENT PRIMARY KEY,
+    CustomerID INT NOT NULL,
+    UserID INT NOT NULL,
+    OrderDate TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    TotalAmount DECIMAL(10, 2) NOT NULL,
+    FOREIGN KEY (CustomerID) REFERENCES Customers(CustomerID) ON DELETE CASCADE,
+    FOREIGN KEY (UserID) REFERENCES Users(UserID) ON DELETE CASCADE
+);
+
+-- ORDER DETAILS TABLE
+CREATE TABLE OrderDetails (
+    DetailID INT AUTO_INCREMENT PRIMARY KEY,
+    OrderID INT NOT NULL,
+    ProductID INT NOT NULL,
+    Quantity INT NOT NULL,
+    Price DECIMAL(10, 2) NOT NULL,
+    LineTotal DECIMAL(10, 2) AS (Quantity * Price) STORED,
+    FOREIGN KEY (OrderID) REFERENCES Orders(OrderID) ON DELETE CASCADE,
+    FOREIGN KEY (ProductID) REFERENCES Products(ProductID) ON DELETE CASCADE
+);
+
+-- USER PROFILE MANAGEMENT
+CREATE TABLE UserDetails (
+    DetailID INT AUTO_INCREMENT PRIMARY KEY,
+    UserID INT NOT NULL,
+    FirstName VARCHAR(100) NOT NULL,
+    LastName VARCHAR(100) NOT NULL,
+    Email VARCHAR(255) NOT NULL,
+    FOREIGN KEY (UserID) REFERENCES Users(UserID) ON DELETE CASCADE
+);
+
+-- SESSIONS TABLE (Session Management)
+CREATE TABLE Sessions (
+    SessionID VARCHAR(255) PRIMARY KEY, -- Unique session identifier, e.g., a UUID
+    UserID INT NOT NULL, -- Reference to the user
+    LoginTime TIMESTAMP DEFAULT CURRENT_TIMESTAMP, -- Time of login
+    ExpiryTime TIMESTAMP NULL, -- When the session expires
+    IsActive BOOLEAN DEFAULT TRUE, -- Indicates if the session is active
+    FOREIGN KEY (UserID) REFERENCES Users(UserID) ON DELETE CASCADE
+);
+
+-- Trigger to set ExpiryTime
+DELIMITER $$
+CREATE TRIGGER SetExpiryTime
+BEFORE INSERT ON Sessions
+FOR EACH ROW
+BEGIN
+    IF NEW.ExpiryTime IS NULL THEN
+        SET NEW.ExpiryTime = DATE_ADD(NEW.LoginTime, INTERVAL 1 HOUR);
+    END IF;
+END$$
+DELIMITER ;
+
+-- Indexes for better session query performance
+CREATE INDEX idx_UserID ON Sessions(UserID);
+CREATE INDEX idx_ExpiryTime ON Sessions(ExpiryTime);
+
+-- SAMPLE DATA INSERTIONS
+-- Users
+INSERT INTO Users (Name, Email, PasswordHash, Role) VALUES
+    ('John Doe', 'john.doe@example.com', 'hashed_password1', 'Store Manager'),
+    ('Jane Smith', 'jane.smith@example.com', 'hashed_password2', 'Warehouse Manager'),
+    ('Alice Johnson', 'alice.johnson@example.com', 'hashed_password3', 'Category Manager'),
+    ('Bob Brown', 'bob.brown@example.com', 'hashed_password4', 'Sales Associate');
+
+-- UserRoles
+INSERT INTO UserRoles (RoleName, Description) VALUES
+    ('Store Manager', 'Manage store operations'),
+    ('Warehouse Manager', 'Oversee warehouse logistics'),
+    ('Category Manager', 'Optimize product categories'),
+    ('Sales Associate', 'Assist customers and handle sales');
+
+-- Products
+INSERT INTO Products (Name, BuyingPrice, SellingPrice, Quantity, ThresholdValue, ExpiryDate, Availability, Category, StockLevel, SalesPerformance) VALUES
+    ('QuickBuy Whole Milk', 0.95, 1.50, 50, 10, '2024-01-15', TRUE, 'Dairy Products', 100, 'Top-selling'),
+    ('QuickBuy Bread Loaf', 1.10, 1.80, 30, 5, '2024-01-08', TRUE, 'Bakery Items', 50, 'Top-selling'),
+('QuickBuy Eggs', 2.50, 3.50, 100, 20, '2024-02-01', TRUE, 'Dairy Products', 200, 'Top-selling'),
+    ('QuickBuy Butter', 1.75, 2.50, 40, 10, '2024-03-10', TRUE, 'Dairy Products', 80, 'Low-selling');
+
+-- ProductDetails
+INSERT INTO ProductDetails (ProductID, Description, Dimensions, Weight, Manufacturer, WarrantyPeriod) VALUES
+    (1, 'Fresh whole milk', '1L carton', 1.05, 'QuickBuy Dairy', 'N/A'),
+    (2, 'Soft white bread loaf', '500g', 0.5, 'QuickBuy Bakery', 'N/A'),
+    (3, 'Large eggs pack', '12 eggs', 0.75, 'QuickBuy Poultry', 'N/A');
+
+-- BestSellingProducts
+INSERT INTO BestSellingProducts (ProductID, Name, Category, TotalSales, Turnover) VALUES
+    (1, 'QuickBuy Whole Milk', 'Dairy Products', 500, 750.00),
+    (3, 'QuickBuy Eggs', 'Dairy Products', 300, 1050.00);
+
+-- LowStockProducts
+INSERT INTO LowStockProducts (ProductID, Name, Category, RemainingStock, ThresholdValue) VALUES
+    (2, 'QuickBuy Bread Loaf', 'Bakery Items', 5, 10),
+    (4, 'QuickBuy Butter', 'Dairy Products', 8, 10);
+
+-- Customers
+INSERT INTO Customers (FirstName, LastName, Email, PhoneNumber, Address) VALUES
+    ('Michael', 'Scott', 'michael.scott@dundermifflin.com', '555-1234', '1725 Slough Avenue, Scranton'),
+    ('Pam', 'Beesly', 'pam.beesly@dundermifflin.com', '555-5678', 'Apartment 3B, Scranton');
+
+-- Orders
+INSERT INTO Orders (CustomerID, UserID, OrderDate, TotalAmount) VALUES
+    (1, 1, '2025-01-06 10:00:00', 45.00),
+    (2, 2, '2025-01-06 11:00:00', 30.00);
+
+-- OrderDetails
+INSERT INTO OrderDetails (OrderID, ProductID, Quantity, Price) VALUES
+    (1, 1, 10, 1.50),
+    (1, 2, 5, 1.80),
+    (2, 3, 6, 3.50);
